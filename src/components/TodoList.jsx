@@ -1,4 +1,5 @@
 import { useState } from "react";
+import GroupList from "./common/GroupList";
 import Todo from "./Todo";
 
 const TodoList = () => {
@@ -15,13 +16,7 @@ const TodoList = () => {
         { id: 10, task: "Organize closet" },
     ]);
     return (
-        <ul className="list-group">
-            {todos.map((todo) => (
-                <li key={todo.id} className="list-group-item">
-                    <Todo todo={todo} />
-                </li>
-            ))}
-        </ul>
+        <GroupList items={todos} component={Todo} />
     );
 };
 
