@@ -1,10 +1,12 @@
 import { useState } from "react";
 import AddTodo from "./AddTodo";
 import GroupList from "./common/GroupList";
+import Pagination from "./common/Pagination";
 import Todo from "./Todo";
+import paginate from "./utils/paginate";
 
 const TodoList = () => {
-    const [todos, setTodos] = useState([
+    const [allTodos, setAllTodos] = useState([
         { id: 1, task: "Buy groceries" },
         { id: 2, task: "Finish report" },
         { id: 3, task: "Call Mom" },
@@ -17,23 +19,39 @@ const TodoList = () => {
         { id: 10, task: "Organize closet" },
     ]);
 
+    const [pageSize] = useState(5);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
     const handleAdd = (todo) => {
-        setTodos((prev) => {
+        setAllTodos((prev) => {
             const newTodo = { id: Math.random().toString(36).slice(2, 7), ...todo };
             return [newTodo, ...prev];
         });
     };
 
     const handleDelete = (todo) => {
-        setTodos((prev) => {
+        setAllTodos((prev) => {
             return prev.filter((t) => t.id !== todo.id);
         });
     };
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+
+    const todos = paginate(allTodos, currentPage, pageSize);
 
     return (
         <div>
             <AddTodo onAdd={handleAdd} />
             <GroupList items={todos} component={Todo} onDelete={handleDelete} />
+            <Pagination
+                totalSize={allTodos.length}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
         </div>
     );
 };
