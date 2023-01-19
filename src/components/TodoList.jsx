@@ -3,7 +3,7 @@ import GroupList from "./common/GroupList";
 import Todo from "./Todo";
 
 const TodoList = () => {
-    const [todos] = useState([
+    const [todos, setTodos] = useState([
         { id: 1, task: "Buy groceries" },
         { id: 2, task: "Finish report" },
         { id: 3, task: "Call Mom" },
@@ -15,9 +15,14 @@ const TodoList = () => {
         { id: 9, task: "Plan weekend trip" },
         { id: 10, task: "Organize closet" },
     ]);
-    return (
-        <GroupList items={todos} component={Todo} />
-    );
+
+    const handleDelete = (todo) => {
+        setTodos((prev) => {
+            return prev.filter((t) => t.id !== todo.id);
+        });
+    };
+
+    return <GroupList items={todos} component={Todo} onDelete={handleDelete} />;
 };
 
 export default TodoList;
