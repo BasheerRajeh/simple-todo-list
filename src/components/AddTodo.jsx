@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./common/Input";
 
 const AddTodo = (props) => {
     const { onAdd } = props;
@@ -12,21 +13,22 @@ const AddTodo = (props) => {
 
     return (
         <>
-            <div className="row p-2 d-flex justify-content-between align-content-center">
-                <input
+            <form className="row p-2 d-flex justify-content-between align-content-center">
+                <Input
+                    name="task"
                     value={task}
-                    onChange={(e) => setTask(e.currentTarget.value)}
-                    type="text"
-                    className="col form-control"
+                    placeholder={"Add a new task..."}
+                    onChange={setTask}
+                    className="col"
                 />
                 {task.trim() !== "" && (
                     <div className="col-auto d-flex justify-content-end">
-                        <button onClick={handleAdd} className="btn btn-primary">
+                        <button type="submit" onClick={handleAdd} className="btn btn-primary">
                             Add Todo
                         </button>
                     </div>
                 )}
-            </div>
+            </form>
         </>
     );
 };
