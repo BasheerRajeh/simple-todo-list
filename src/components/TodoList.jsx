@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AddTodo from "./AddTodo";
 import GroupList from "./common/GroupList";
 import Todo from "./Todo";
 
@@ -16,13 +17,25 @@ const TodoList = () => {
         { id: 10, task: "Organize closet" },
     ]);
 
+    const handleAdd = (todo) => {
+        setTodos((prev) => {
+            const newTodo = { id: Math.random().toString(36).slice(2, 7), ...todo };
+            return [newTodo, ...prev];
+        });
+    };
+
     const handleDelete = (todo) => {
         setTodos((prev) => {
             return prev.filter((t) => t.id !== todo.id);
         });
     };
 
-    return <GroupList items={todos} component={Todo} onDelete={handleDelete} />;
+    return (
+        <div>
+            <AddTodo onAdd={handleAdd} />
+            <GroupList items={todos} component={Todo} onDelete={handleDelete} />
+        </div>
+    );
 };
 
 export default TodoList;
