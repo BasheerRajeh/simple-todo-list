@@ -17,7 +17,7 @@ const Input = (props) => {
                 onChange={(e) => onChange(e.currentTarget.value)}
                 type={type}
                 placeholder={placeholder}
-                className={`form-control ${className}`}
+                className={className}
             />
         </>
     );
