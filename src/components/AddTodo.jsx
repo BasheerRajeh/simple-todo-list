@@ -1,17 +1,23 @@
-import moment from 'moment';
+import moment from "moment";
 import { useState } from "react";
 import GroupInput from "./common/GroupInput";
+
+const DATE_TIME_FORMAT = 'yyyy-MM-DDThh:mm';
 
 const AddTodo = (props) => {
     const { onAdd } = props;
     const [task, setTask] = useState("");
-    const [dueDate, setDueDate] = useState(moment().format('YYYY-MM-DDTHH:mm'));
+    const [dueDate, setDueDate] = useState(moment().format(DATE_TIME_FORMAT));
 
+    console.log(dueDate);
     const handleAdd = () => {
-        const todo = { task: task };
+        const todo = {
+            task: task,
+            dueDate: dueDate,
+        };
         onAdd(todo);
         setTask("");
-        setDueDate(moment().format('YYYY-MM-DDTHH:mm'));
+        setDueDate(moment().format(DATE_TIME_FORMAT));
     };
 
     const inputs = [
