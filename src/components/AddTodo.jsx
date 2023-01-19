@@ -1,23 +1,37 @@
-import moment from "moment";
+import { useEffect } from "react";
 import { useState } from "react";
 import GroupInput from "./common/GroupInput";
-
-const DATE_TIME_FORMAT = 'yyyy-MM-DDThh:mm';
+import formatDate from "./utils/formatDate";
 
 const AddTodo = (props) => {
-    const { onAdd } = props;
+    const { todo: passedTodo, onAdd } = props;
     const [task, setTask] = useState("");
-    const [dueDate, setDueDate] = useState(moment().format(DATE_TIME_FORMAT));
+    const [dueDate, setDueDate] = useState(formatDate());
 
-    console.log(dueDate);
+    useEffect(() => {
+        if (passedTodo) {
+            setTask(passedTodo.task);
+            setDueDate(passedTodo.dueDate);
+        }
+    }, [passedTodo]);
+
     const handleAdd = () => {
-        const todo = {
-            task: task,
-            dueDate: dueDate,
-        };
+        let todo;
+        if (passedTodo)
+            todo = {
+                id: passedTodo.id,
+                task: task,
+                dueDate: dueDate,
+            };
+        else {
+            todo = {
+                task: task,
+                dueDate: dueDate,
+            };
+        }
         onAdd(todo);
         setTask("");
-        setDueDate(moment().format(DATE_TIME_FORMAT));
+        setDueDate(formatDate());
     };
 
     const inputs = [
@@ -46,9 +60,9 @@ const AddTodo = (props) => {
                         <button
                             type="submit"
                             onClick={handleAdd}
-                            className="btn btn-primary"
+                            className={`btn btn-${passedTodo ? "info" : "primary"}`}
                         >
-                            Add Todo
+                            {passedTodo ? "Edit Todo" : "Add Todo"}
                         </button>
                     </div>
                 )}

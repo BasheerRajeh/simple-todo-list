@@ -23,6 +23,8 @@ const TodoList = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
+    const [todo, setTodo] = useState();
+
     const handleAdd = (todo) => {
         setAllTodos((prev) => {
             const newTodo = { id: Math.random().toString(36).slice(2, 7), ...todo };
@@ -36,6 +38,11 @@ const TodoList = () => {
         });
     };
 
+    const handleEdit = (todo) => {
+        setTodo(todo);
+        handleDelete(todo);
+    };
+
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
@@ -44,8 +51,13 @@ const TodoList = () => {
 
     return (
         <div>
-            <AddTodo onAdd={handleAdd} />
-            <GroupList items={todos} component={Todo} onDelete={handleDelete} />
+            <AddTodo todo={todo} onAdd={handleAdd} />
+            <GroupList
+                items={todos}
+                component={Todo}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+            />
             <Pagination
                 totalSize={allTodos.length}
                 pageSize={pageSize}

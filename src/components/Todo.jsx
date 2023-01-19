@@ -1,6 +1,6 @@
 import moment from "moment/moment";
 const Todo = (props) => {
-    const { item, onDelete } = props;
+    const { item, onEdit, onDelete } = props;
     return (
         <div className="row d-flex justify-content-between align-content-center">
             <div className="col">
@@ -11,6 +11,12 @@ const Todo = (props) => {
                 <span className="badge bg-danger ">{moment(item.dueDate).format('HH:MM')}</span>
             </div>
             <div className="col d-flex align-self-center justify-content-end">
+                <button
+                    onClick={() => onEdit(item)}
+                    className="btn btn-outline-info btn-sm me-1"
+                >
+                    ~
+                </button>
                 <button
                     onClick={() => onDelete(item)}
                     className="btn btn-outline-danger btn-sm"
