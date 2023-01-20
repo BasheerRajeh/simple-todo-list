@@ -1,4 +1,5 @@
 import { useState } from "react";
+import _ from "lodash";
 import AddTodo from "./AddTodo";
 import GroupList from "./common/GroupList";
 import Pagination from "./common/Pagination";
@@ -46,8 +47,9 @@ const TodoList = () => {
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
+    const sortedTodos = _.sortBy(allTodos, ["dueDate"], "asc");
 
-    const todos = paginate(allTodos, currentPage, pageSize);
+    const todos = paginate(sortedTodos, currentPage, pageSize);
 
     return (
         <div>
@@ -59,7 +61,7 @@ const TodoList = () => {
                 onDelete={handleDelete}
             />
             <Pagination
-                totalSize={allTodos.length}
+                totalSize={sortedTodos.length}
                 pageSize={pageSize}
                 currentPage={currentPage}
                 onPageChange={handlePageChange}
