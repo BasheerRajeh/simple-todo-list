@@ -52,7 +52,9 @@ const TodoList = () => {
 
     return (
         <div>
-            <AddTodo todo={todo} onAdd={handleAdd} />
+            {/* <AddTodo todo={todo} onAdd={handleAdd} /> */}
+            <h1 className="fw-bold m-4">My Tasks</h1>
+            <button className="btn btn-primary w-100 p-2 mb-2">Add Task</button>
             <GroupList
                 items={todos}
                 component={Todo}
