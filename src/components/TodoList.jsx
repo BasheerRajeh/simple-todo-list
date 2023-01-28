@@ -15,8 +15,6 @@ const TodoList = () => {
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const [todo, setTodo] = useState();
-
     useEffect(() => {
         setAllTodos(loadTodoList());
     }, []);
@@ -33,14 +31,9 @@ const TodoList = () => {
     const handleDelete = (todo) => {
         setAllTodos((prev) => {
             const newTodos = prev.filter((t) => t.id !== todo.id);
-            saveTodoList(newTodos)
+            saveTodoList(newTodos);
             return newTodos;
         });
-    };
-
-    const handleEdit = (todo) => {
-        setTodo(todo);
-        handleDelete(todo);
     };
 
     const handlePageChange = (page) => {
@@ -52,13 +45,11 @@ const TodoList = () => {
 
     return (
         <div>
-            {/* <AddTodo todo={todo} onAdd={handleAdd} /> */}
             <h1 className="fw-bold m-4">My Tasks</h1>
-            <button className="btn btn-primary w-100 p-2 mb-2">Add Task</button>
+            <AddTodo onAdd={handleAdd} />
             <GroupList
                 items={todos}
                 component={Todo}
-                onEdit={handleEdit}
                 onDelete={handleDelete}
             />
             <Pagination

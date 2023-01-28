@@ -1,72 +1,67 @@
-import { useEffect } from "react";
 import { useState } from "react";
-import GroupInput from "./common/GroupInput";
+import Input from "./common/Input";
+import Modal from "./Modal";
 import formatDate from "./utils/formatDate";
 
 const AddTodo = (props) => {
-    const { todo: passedTodo, onAdd } = props;
+    const { onAdd } = props;
     const [task, setTask] = useState("");
     const [dueDate, setDueDate] = useState(formatDate());
-
-    useEffect(() => {
-        if (passedTodo) {
-            setTask(passedTodo.task);
-            setDueDate(passedTodo.dueDate);
-        }
-    }, [passedTodo]);
+    const [description, setDescription] = useState("");
 
     const handleAdd = () => {
-        let todo;
-        if (passedTodo)
-            todo = {
-                id: passedTodo.id,
-                task: task,
-                dueDate: dueDate,
-            };
-        else {
-            todo = {
-                task: task,
-                dueDate: dueDate,
-            };
-        }
+        const todo = {
+            task: task,
+            dueDate: dueDate,
+            description: description
+        };
+        console.log(dueDate);
         onAdd(todo);
         setTask("");
         setDueDate(formatDate());
+        setDescription("");
     };
 
-    const inputs = [
-        {
-            name: "task",
-            value: task,
-            placeholder: "Add a new task...",
-            onChange: setTask,
-            className: "form-control",
-        },
-        {
-            type: "datetime-local",
-            name: "date",
-            value: dueDate,
-            onChange: setDueDate,
-            className: "btn btn-outline-primary",
-        },
-    ];
+    const handleClear = () => {
+        setTask("");
+        setDueDate(formatDate());
+        setDescription("");
+    }
+
 
     return (
         <>
-            <form className="row p-2 d-flex justify-content-between align-content-center">
-                <GroupInput inputs={inputs} />
-                {task.trim() !== "" && (
-                    <div className="col-auto d-flex justify-content-end">
-                        <button
-                            type="submit"
-                            onClick={handleAdd}
-                            className={`btn btn-${passedTodo ? "info" : "primary"}`}
-                        >
-                            {passedTodo ? "Edit Todo" : "Add Todo"}
-                        </button>
-                    </div>
-                )}
-            </form>
+            <button
+                className="btn btn-primary w-100 p-2 mb-2"
+                data-bs-toggle="modal"
+                data-bs-target="#add-task"
+                onClick={handleClear}
+            >
+                Add Task
+            </button>
+            <Modal id='add-task' title="Add Task" onCancel={handleClear} onAction={handleAdd}>
+                <Input
+                    label="Task Title"
+                    name="task-title"
+                    value={task}
+                    placeholder="Task Title ..."
+                    onChange={setTask}
+                />
+                <Input
+                    type="datetime-local"
+                    name="dueDate"
+                    value={dueDate}
+                    placeholder="Task Title ..."
+                    onChange={setDueDate}
+                />
+                <Input
+                    type="textarea"
+                    name="description"
+                    value={description}
+                    placeholder="Task Description ..."
+                    onChange={setDescription}
+                />
+            </Modal>
         </>
     );
 };

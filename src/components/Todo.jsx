@@ -1,31 +1,32 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { regular } from '@fortawesome/fontawesome-svg-core/import.macro' // <-- import styles to be used
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro"; // <-- import styles to be used
 
 import moment from "moment/moment";
 const Todo = (props) => {
-    const { item, onEdit, onDelete } = props;
+    const { item, onDelete } = props;
     return (
         <div className="row d-flex justify-content-between align-content-center">
             <div className="col">
-                <div className="d-flex align-content-start">
-                    <h3 className="fw-light" >{item.task}</h3>
+                <div className="">
+                    <h3 className="fw-semibold fs-4">{item.task}</h3>
+                    <p className="text-muted">{item.description}</p>
                 </div>
-                <span className="badge bg-black bg-opacity-75">{moment(item.dueDate).format('yyyy-MM-DD')}</span>&nbsp;
-                <span className="badge bg-danger ">{moment(item.dueDate).format('HH:MM')}</span>
+                <span className="badge bg-black bg-opacity-75">
+                    {moment(item.dueDate).format("yyyy-MM-DD")}
+                </span>
+                &nbsp;
+                <span className="badge bg-danger ">
+                    {moment(item.dueDate).format("hh:mm")}
+                </span>
             </div>
-            <div className="col d-flex align-self-center justify-content-end">
-                <button
-                    onClick={() => onEdit(item)}
-                    className="btn btn-outline-info btn-sm me-1"
-                >
-                    <FontAwesomeIcon icon={regular('edit')} />
-                </button>
-                <button
+            <div className="col d-flex align-self-start p-2 justify-content-end">
+                <FontAwesomeIcon
                     onClick={() => onDelete(item)}
-                    className="btn btn-outline-danger btn-sm"
-                >
-                    <FontAwesomeIcon icon={regular('trash-can')} />
-                </button>
+                    style={{ cursor: "pointer" }}
+                    color="tomato"
+                    size="xl"
+                    icon={regular("trash-can")}
+                />
             </div>
         </div>
     );

@@ -5,21 +5,43 @@ const Input = (props) => {
         label,
         placeholder = "",
         type = "text",
+        row = "3",
         onChange,
-        className,
     } = props;
+
+    const isTextarea = type === "textarea";
+
     return (
         <>
-            {label && <label for={name}>{label}</label>}
-            <input
-                value={value}
-                name={name}
-                onChange={(e) => onChange(e.currentTarget.value)}
-                type={type}
-                placeholder={placeholder}
-                className={className}
-                autoComplete='off'
-            />
+            <div className="mb-3">
+                {label && (
+                    <label htmlFor={name} className="form-label">
+                        {label}
+                    </label>
+                )}
+                {!isTextarea && (
+                    <input
+                        type={type}
+                        name={name}
+                        value={value}
+                        placeholder={placeholder}
+                        onChange={(e) => onChange(e.currentTarget.value)}
+                        className="form-control"
+                        autoComplete="off"
+                    />
+                )}
+                {isTextarea && (
+                    <textarea
+                        name={name}
+                        rows={row}
+                        placeholder={placeholder}
+                        onChange={(e) => onChange(e.currentTarget.value)}
+                        className="form-control"
+                        value={value}
+                    >
+                    </textarea>
+                )}
+            </div>
         </>
     );
 };
