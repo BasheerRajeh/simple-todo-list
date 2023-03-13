@@ -3,6 +3,10 @@ export function saveTodoList(todoList) {
 }
 
 export function loadTodoList() {
-    const todos = localStorage.getItem('todos') ?? [];
-    return JSON.parse(todos);
+    const todos = localStorage.getItem('todos');
+    if (todos) {
+        return JSON.parse(todos);
+    } else {
+        return [];
+    }
 }
